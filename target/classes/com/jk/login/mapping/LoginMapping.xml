@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jk.login.dao.LoginDao">
+
+	<sql id="Base_Column_List">
+		id, 
+		user_name, 
+		password, 
+		age
+	</sql>
+	
+	<select id = "doLogin" resultType = "com.jk.login.entity.User">
+		SELECT
+			<include refid="Base_Column_List"/>
+		FROM user_t
+		<where>
+			<if test = "username != null and username != ''">
+				user_name = #{username}
+			</if>
+			<if test = "password != null and password != ''">
+				AND password = #{password}
+			</if>
+		</where> 
+	</select>
+	
+</mapper>

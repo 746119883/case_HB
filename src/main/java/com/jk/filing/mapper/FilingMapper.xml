@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jk.filing.dao.FilingDao">
+
+	<sql id="Base_Column_list">
+		id,
+		seqnum,
+		people,
+		regisdate,
+		setupdate,
+		endcasedate,
+		eventid
+	</sql>
+
+	<select id="getMAXEndcasedate" resultType="string">
+		SELECT
+			MAX(endcasedate)
+		FROM zf_lawcaseinfo
+	</select>
+	
+	<select id="getZFLawCaseInfo" resultType="com.jk.filing.entity.ZFLawCaseInfo">
+		SELECT
+			<include refid="Base_Column_list" />
+		FROM zf_lawcaseinfo
+	</select>
+
+	<insert id="addZFLawCaseInfo" parameterType="java.util.List">
+		INSERT INTO zf_lawcaseinfo 
+		(   id,
+			seqnum,
+			people,
+			regisdate,
+			setupdate,
+			endcasedate,
+			eventid
+		)
+	    VALUES
+		<foreach collection="list" item="item" index="index"
+			separator=",">
+			(
+				#{item.id},
+				#{item.seqnum},
+				#{item.people},
+				#{item.regisdate},
+				#{item.setupdate},
+				#{item.endcasedate},
+				#{item.eventid}
+			)
+		</foreach>
+	</insert>
+
+</mapper>
